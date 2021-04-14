@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TravelLog</string>
+    <string name="GPSAlertDialogTitle">\"Alert\"</string>
+    <string name="GPSAlertDialogMessage">\"Alert\"</string>
+    <string name="action_settings">\"Settings\"</string>
+    <string name="cancel">\"Cancel\"</string>
+</resources>
