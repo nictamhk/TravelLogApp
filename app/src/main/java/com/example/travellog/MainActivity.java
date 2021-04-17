@@ -1,34 +1,21 @@
 package com.example.travellog;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.os.IBinder;
-import android.provider.Settings;
 import android.view.View;
 
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -38,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     TextView showLocation;
     LocationManager locationManager;
     String latitude, longitude;
+    Button navBtn;
 
     // For GPS information;
     GPS gps;
@@ -137,6 +125,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 //}
             }
         });
+
+        navBtn = (Button)findViewById(R.id.navBtn);
+        navBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(getBaseContext(), RecommendationActivity.class);
+                startActivity(intent);
+            }
+        }
+        );
     }
 
     private void getLocation() {
@@ -219,9 +217,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public void onProviderDisabled(String provider) {
     }
 
-    private class foursquare extends AsyncTask<View, Void, String> {
-
-    }
+    // private class foursquare extends AsyncTask<View, Void, String> {
+    //
+    // }
 
 
 /*
