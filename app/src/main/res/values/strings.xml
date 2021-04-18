@@ -4,4 +4,12 @@
     <string name="GPSAlertDialogMessage">\"Alert\"</string>
     <string name="action_settings">\"Settings\"</string>
     <string name="cancel">\"Cancel\"</string>
+
+    <string-array name="type_array">
+        <item>restaurant</item>
+        <item>shopping_mall</item>
+        <item>tourist_attraction</item>
+        <item>lodging</item>
+    </string-array>
+
 </resources>
