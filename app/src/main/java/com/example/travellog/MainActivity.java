@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
             // If there is a provider, request a location
             if (!providerInfo.isEmpty()) {
-                locationManager.requestLocationUpdates(providerInfo, 300000, 10, this);
+                locationManager.requestLocationUpdates(providerInfo, 30000, 10, this);
 
                 if (locationManager != null) {
                     loc = locationManager.getLastKnownLocation(providerInfo);
@@ -276,7 +276,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     // Does a check if the required information is present before extracting it;
-    // int type : 0 for str, 1 for double, 2 for int
     public static String jsonExtract (String reqComponent, JSONObject place){
 
         String extracted_result = "";
@@ -284,11 +283,47 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         try {
             if (place.has(reqComponent))
                 extracted_result = place.getString(reqComponent);
-            else
-                if(reqComponent == "distance") {
-                    extracted_result = "" + place.getJSONObject("location").getInt("distance");
-                    Log.println(Log.DEBUG, "Distance",  extracted_result);
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        return extracted_result;
+    }
+
+    // For extracting, distance, visits, and been here data.
+    public static int jsonExtractSubLevel (String reqComponent, JSONObject place){
+
+        int extracted_result = 0;
+
+        try {
+            if(reqComponent == "distance") {
+                extracted_result = place.getJSONObject("location").getInt("distance");
+            }
+
+            // Placeholder - to be replace by own database
+            else if (reqComponent == "visited_count") {
+                if (place.has("beenHere")){
+                    if (place.getJSONObject("beenHere").has("count"))
+                        extracted_result = place.getJSONObject("beenHere").getInt("count");
                 }
+
+                else
+                    extracted_result = 0;
+                Log.println(Log.DEBUG, "Visited Count", "" + extracted_result);
+            }
+
+            else if (reqComponent == "here_count"){
+                if (place.has("hereNow")){
+                    if (place.getJSONObject("hereNow").has("count"))
+                        extracted_result = place.getJSONObject("hereNow").getInt("count");
+                }
+
+                else
+                    extracted_result = 0;
+                Log.println(Log.DEBUG, "Here Now Count", "" + extracted_result);
+            }
+
         }
         catch (JSONException e){
             e.printStackTrace();
@@ -316,7 +351,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                         jsonExtract("longitude", obj),
                         jsonExtract("latitude", obj),
                         jsonExtract("category", obj),
-                        Integer.parseInt(jsonExtract("distance", obj)));
+                        jsonExtractSubLevel("distance", obj),
+                        jsonExtractSubLevel("visited_count", obj),
+                        jsonExtractSubLevel("here_count", obj));
 
                 lst_locations.add(poi);
                 //System.out.println("Location Name: " + poi.getName());
@@ -325,7 +362,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         catch (JSONException e){
             e.printStackTrace();
         }
-
 
 
         Intent intent = new Intent(getBaseContext(), LocationListActivity.class);
