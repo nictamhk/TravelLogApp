@@ -1,38 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/showLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fetching Location..."
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnCheckIn"
+    <com.github.mikephil.charting.charts.PieChart
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="212dp"
-        android:text="Check In"
-        app:layout_constraintBottom_toTopOf="@+id/showLocation"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <Button
-        android:id="@+id/navBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to recommendation"
-        app:layout_constraintBottom_toTopOf="@+id/showLocation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCheckIn" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/idPieChart"></com.github.mikephil.charting.charts.PieChart>
+</RelativeLayout>
