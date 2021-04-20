@@ -27,8 +27,9 @@ public class CasesActivity extends Activity implements View.OnClickListener {
     }
    String a ="";
    public void onClick(View v) {
-        String lon = ;
-        String lat = ;
+
+        String lon = 114.22506642557767;
+        String lat =22.31554554826026 ;
         //获取地址信息
         String urlGeo = MessageFormat.format("http://api.map.baidu.com/reverse_geocoding/v3/?ak=iBfpVE9e3BeGRPm1i2Gkq8bGenQm6h3b7&output=json&coordtype=wgs84ll&location={0},{1}",lat,lon);
         OkHttpClient okHttpClient = new OkHttpClient();
