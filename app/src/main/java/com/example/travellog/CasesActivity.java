@@ -21,10 +21,7 @@ public class CasesActivity extends mainActivity implements View.OnClickListener 
   protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn_Login = (Button) findViewById(R.id.btn_Login);
-
-        txt_UserName = (EditText) findViewById(R.id.txt_UserName);
-        txt_UserPW = (EditText) findViewById(R.id.txt_UserPW);
+        btn_Login = (Button) findViewById(R.id.btnCases);
         btn_Login.setOnClickListener(this);
     }
   
