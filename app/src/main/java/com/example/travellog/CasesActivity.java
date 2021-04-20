@@ -15,17 +15,18 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class CasesActivity extends mainActivity implements View.OnClickListener {
+public class CasesActivity extends Activity implements View.OnClickListener {
 
-  Button btn_Login;
-  
+  Button btn;
+  TextView caseInfo;
   protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn_Login = (Button) findViewById(R.id.btnCases);
-        btn_Login.setOnClickListener(this);
+        btn = (Button) findViewById(R.id.btnCases);
+        caseInfo = (TextView)findViewById(R.id.place);
+        btn.setOnClickListener(this);
     }
-  
+   String a ="";
    public void onClick(View v) {
         String lon = String.valueOf(getLongitude());
         String lat = String.valueOf(getLatitude());
@@ -85,10 +86,9 @@ public class CasesActivity extends mainActivity implements View.OnClickListener 
                     Response response2 = ca2.execute();
                     String rebody2 = response2.body().string();
                     if(rebody2.equals("[]")){
-                        System.out.println("you are in "+ district +", it is safe here, just have fun.");
+                        caseInfo.setText("you are in "+ district +", it is safe here, just have fun.");
                     }else {
-                        System.out.println("you are in "+ district +", there are some confirmed cases, please take care.");
-                        System.out.println(rebody2);
+                        caseInfo.setText("you are in "+ district +", there are some confirmed cases, please take care.");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
