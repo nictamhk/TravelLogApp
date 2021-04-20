@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     LocationManager locationManager;
     String latitude, longitude;
     Button navBtn;
+    Button casesBtn;
 
     // For GPS information;
     GPS gps;
@@ -135,6 +136,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         }
         );
+        
+        casesBtn = (Button)findViewById(R.id.casesBtn);
+        casesBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+            Intent intent2 =  new Intent(getBaseContext(), CasesActivity.class);
+                startActivity(intent2);
+            }
+        }
+        );                          
+            
     }
 
     private void getLocation() {
