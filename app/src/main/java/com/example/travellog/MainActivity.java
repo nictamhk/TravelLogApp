@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     final FragmentManager fm = getSupportFragmentManager();
     final Fragment recFragment = new RecommendationFragment();
     final Fragment checkinFragment = new CheckinFragment();
+    final Fragment CasesFragment = new CasesFragment();
+    final Fragment StatsFragment = new StatsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +30,19 @@ public class MainActivity extends AppCompatActivity {
     final private BottomNavigationView.OnNavigationItemSelectedListener selectListener = item -> {
         switch (item.getItemId()) {
             case R.id.suggest:
-                System.out.println("nav1");
                 fm.beginTransaction().replace(R.id.container, recFragment).addToBackStack(null).commit();
                 break;
             case R.id.checkin:
-                System.out.println("nav1");
                 fm.beginTransaction().replace(R.id.container, checkinFragment).addToBackStack(null).commit();
                 break;
+            case R.id.covid:
+                fm.beginTransaction().replace(R.id.container, CasesFragment).addToBackStack(null).commit();
+                break;
+            case R.id.stats:
+                fm.beginTransaction().replace(R.id.container, StatsFragment).addToBackStack(null).commit();
+                break;
         }
-        System.out.println("hello");
+
         return true;
     };
 }
