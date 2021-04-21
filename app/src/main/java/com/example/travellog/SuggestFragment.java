@@ -1,6 +1,5 @@
 package com.example.travellog;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,22 +12,18 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
-public class RecommendationFragment extends Fragment implements View.OnClickListener {
+public class SuggestFragment extends Fragment implements View.OnClickListener {
     Button btn;
     TextView place;
     Spinner types_spinner;
@@ -44,7 +39,7 @@ public class RecommendationFragment extends Fragment implements View.OnClickList
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recommendation, container, false);
+        View view = inflater.inflate(R.layout.fragment_suggest, container, false);
         place = view.findViewById(R.id.place);
         btn = view.findViewById(R.id.recBtn);
         btn.setOnClickListener(this);

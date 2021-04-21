@@ -2,7 +2,7 @@ package com.example.travellog;
 
 import android.Manifest;
 import androidx.fragment.app.Fragment;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,9 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -33,12 +31,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -71,7 +65,7 @@ public class CheckinFragment extends Fragment implements LocationListener {
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-                View view = inflater.inflate(R.layout.checkin, container, false);
+                View view = inflater.inflate(R.layout.fragment_checkin, container, false);
 
                 // Request for GPS permission;
                 ActivityCompat.requestPermissions(
