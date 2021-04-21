@@ -66,7 +66,7 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                     String rebody = response.body().string();
                     //JSONObject jsonObject = JSONObject.parseObject(rebody);
                     HashMap map = JSONObject.parseObject(rebody, HashMap.class);
-
+                    if(map.get("result")!=null) {
                     String str1 = JSON.toJSONString(map.get("result"));
                     HashMap result = JSONObject.parseObject(str1,HashMap.class);
 
@@ -110,6 +110,9 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                         caseInfo.setText("you are in "+ district +", it is safe here, just have fun.");
                     }else {
                         caseInfo.setText("you are in "+ district +", there are some confirmed cases, please take care.");
+                    }}else{
+                        caseInfo.setText("can't find your place, please retry");
+                        return;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
