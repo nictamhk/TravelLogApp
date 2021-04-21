@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="相機"
-        android:id="@+id/nav1"
+    <item android:title="check in"
+        android:id="@+id/checkin"
+        android:icon="@drawable/checkin"
         />
-    <item android:title="下載"
-        android:id="@+id/nav2"
+    <item android:title="suggest"
+        android:id="@+id/suggest"
+        android:icon="@drawable/suggest"
         />
-    <item android:title="音樂"
-        android:id="@+id/nav3"
+    <item android:title="covid"
+        android:id="@+id/covid"
+        android:icon="@drawable/covid"
         />
-    <item android:title="設定"
-        android:id="@+id/nav4"
+    <item android:title="stats"
+        android:id="@+id/stats"
+        android:icon="@drawable/stats"
         />
 </menu>

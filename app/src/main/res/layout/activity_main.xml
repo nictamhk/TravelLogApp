@@ -6,39 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/showLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fetching Location..."
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/nav"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="102dp" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/white"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btnCheckIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="Check In"
-        app:layout_constraintBottom_toTopOf="@+id/navBtn"
-        tools:layout_editor_absoluteX="154dp" />
-
-    <Button
-        android:id="@+id/navBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to recommendation"
-        app:layout_constraintBottom_toTopOf="@+id/showLocation"
-        app:layout_constraintEnd_toEndOf="@+id/showLocation"
-        app:layout_constraintStart_toStartOf="@+id/showLocation"/>
-        <!--app:layout_constraintTop_toBottomOf="@+id/btnCheckIn"
-
-    <ListView android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        app:layout_constraintBottom_toTopOf="@+id/showLocation"/>
-        -->
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

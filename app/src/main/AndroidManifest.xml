@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecommendationActivity">
+        <activity android:name=".RecommendationFragment">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="recommedation" />
@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LocationListActivity" />
+        <activity android:name=".CheckinActivity" />
     </application>
 
 </manifest>
