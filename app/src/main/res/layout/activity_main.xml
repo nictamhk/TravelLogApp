@@ -30,4 +30,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav" />
 
+        <Button
+        android:id="@+id/casesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="comfirm cases nearby?"
+        app:layout_constraintBottom_toTopOf="@+id/showLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCheckIn" />        
 </androidx.constraintlayout.widget.ConstraintLayout>
