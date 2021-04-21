@@ -112,7 +112,6 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                         caseInfo.setText("you are in "+ district +", there are some confirmed cases, please take care.");
                     }}else{
                         caseInfo.setText("can't find your place, please retry");
-                        return;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
