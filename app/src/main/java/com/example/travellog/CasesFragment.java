@@ -26,6 +26,7 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
     Button btn;
     TextView caseInfo;
     String a = "";
+    String message;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,34 +40,34 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_cases, container, false);
 
         btn = view.findViewById(R.id.casesBtn);
-        caseInfo = view.findViewById(R.id.place);
+        caseInfo = view.findViewById(R.id.caseInfo);
         btn.setOnClickListener(this);
 
         return view;
     }
 
+    @Override
     public void onClick(View v) {
 
         String lon = "114.22506642557767";
         String lat = "22.31554554826026";
         //获取地址信息
-        String urlGeo = MessageFormat.format("http://api.map.baidu.com/reverse_geocoding/v3/?ak=iBfpVE9e3BeGRPm1i2Gkq8bGenQm6h3b7&output=json&coordtype=wgs84ll&location={0},{1}",lat,lon);
+        String APIKey = "iBfpVE9e3BeGRPm1i2Gkq8bGenQm6hb7";
+        String urlGeo = MessageFormat.format("http://api.map.baidu.com/reverse_geocoding/v3/?ak={0}&output=json&coordtype=wgs84ll&location={1},{2}", APIKey, lat, lon);
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder().url(urlGeo).get().build();
         Call ca = okHttpClient.newCall(request);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Response response = ca.execute();
+
+        Thread thread = new Thread(() -> {
+            try {
+                Response response = ca.execute();
 
 
-                    assert response.body() != null;
-                    String rebody = response.body().string();
-                    //JSONObject jsonObject = JSONObject.parseObject(rebody);
-                    HashMap map = JSONObject.parseObject(rebody, HashMap.class);
-                    if(map.get("result")!=null) {
+                assert response.body() != null;
+                String rebody = response.body().string();
+                //JSONObject jsonObject = JSONObject.parseObject(rebody);
+                HashMap map = JSONObject.parseObject(rebody, HashMap.class);
                     String str1 = JSON.toJSONString(map.get("result"));
                     HashMap result = JSONObject.parseObject(str1,HashMap.class);
 
@@ -82,7 +83,7 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                         case "\"中西区\"":a = "Central @ Western";System.out.println("中西区有comfirmed cases,请担心");break;
                         case "\"东区\"":a = "Eastern";System.out.println("东区有comfirmed cases,请担心");break;
                         case "\"葵青区\"":a = "Kwai Tsing";System.out.println("葵青区有comfirmed cases,请担心");break;
-                        case "\"观塘区\"":a = "Kwun Tong";System.out.println("观塘区有comfirmed cases,请担心");break;
+                        case "\"观塘区\"":a = "Kwun%20Tong";System.out.println("观塘区有comfirmed cases,请担心");break;
                         case "\"西贡区\"":a = "Sai Kung";System.out.println("西贡区有comfirmed cases,请担心");break;
                         case "\"深水埗区\"":a = "Sham Shui Po";System.out.println("深水埗区有comfirmed cases,请担心");break;
                         case "\"南区\"":a = "Southern";System.out.println("南区有comfirmed cases,请担心");break;
@@ -98,7 +99,8 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                     }
                     //获取类型名称的方法System.out.println(result.get("addressComponent").getClass().getName().toString());
                     //获取hkdata
-                    String url = MessageFormat.format("https://api.data.gov.hk/v2/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fbuilding_list_eng.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%2C%22filters%22%3A%5B%5B1%2C%22eq%22%2C%5B%22{0}%22%5D%5D%5D%7D",a);
+                    String url = MessageFormat.format("https://api.data.gov.hk/v2/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fbuilding_list_eng.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%2C%22filters%22%3A%5B%5B1%2C%22eq%22%2C%5B%22{0}%22%5D%5D%5D%7D", a);
+                    System.out.println(url);
                     OkHttpClient confirms = new OkHttpClient();
                     Request conRe = new Request.Builder().url(url).get().build();
                     Call ca2 = confirms.newCall(conRe);
@@ -106,17 +108,25 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                     Response response2 = ca2.execute();
                     assert response2.body() != null;
                     String rebody2 = response2.body().string();
+                    System.out.println("hello " + rebody2);
                     if(rebody2.equals("[]")){
-                        caseInfo.setText("you are in "+ district +", it is safe here, just have fun.");
-                    }else {
-                        caseInfo.setText("you are in "+ district +", there are some confirmed cases, please take care.");
-                    }}else{
-                        caseInfo.setText("can't find your place, please retry");
+                        message = "you are in "+ district +", it is safe here, just have fun.";
+                    } else {
+                        message = "you are in "+ district +", there are some confirmed cases, please take care.";
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).start();
+        });
+
+        thread.start();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        caseInfo.setText(message);
     }
 }

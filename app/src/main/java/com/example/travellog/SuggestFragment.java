@@ -33,7 +33,6 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("hello from onCreate");
     }
 
 
@@ -51,8 +50,6 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         types_spinner.setAdapter(adapter);
-
-        System.out.println("hello from recommendation");
 
         return view;
     }
