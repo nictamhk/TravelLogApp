@@ -10,10 +10,13 @@
         android:id="@+id/caseInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
-        android:text="casesInformation"
+        android:layout_marginTop="148dp"
+        android:gravity="center"
+        android:lineHeight="25dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="cases information"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

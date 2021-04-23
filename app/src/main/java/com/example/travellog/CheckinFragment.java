@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.system.ErrnoException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,7 +159,9 @@ public class CheckinFragment extends Fragment implements LocationListener {
         }
 
 
-        public void connect4sq (){
+        public void connect4sq () {
+                btnCheckIn.setEnabled(false);
+                btnCheckIn.setText("Loading...");
 
                 getLocation();
 
@@ -171,27 +174,33 @@ public class CheckinFragment extends Fragment implements LocationListener {
                         ExecutorService executor = Executors.newSingleThreadExecutor();
                         final Handler handler = new Handler(Looper.getMainLooper());
 
-                        executor.execute(new Runnable()
-                                         {
-                                                 @Override
-                                                 public void run(){
-                                                         try {
-                                                                 JSONArray venues_results = getFoursquare(url);
-                                                                 handler.post(new Runnable() {
-                                                                         @Override
-                                                                         public void run(){
-                                                                                 extractPOI(venues_results);
-                                                                         }
-                                                                 });
-                                                         } catch (JSONException e) {
-                                                                 e.printStackTrace();
-                                                         } catch (IOException e) {
-                                                                 e.printStackTrace();
-                                                         }
-                                                 }
-                                         }
+                        Thread thread = new Thread(new Runnable()
+                        {
+                                @Override
+                                public void run(){
+                                        try {
+                                                JSONArray venues_results = getFoursquare(url);
+                                                handler.post(new Runnable() {
+                                                        @Override
+                                                        public void run(){
+                                                                extractPOI(venues_results);
+                                                        }
+                                                });
+                                        } catch (JSONException e) {
+                                                e.printStackTrace();
+                                        } catch (IOException e) {
+                                                e.printStackTrace();
+                                        }
+                                }
+                        });
+                        thread.start();
 
-                        );
+                        try {
+                                thread.join();
+                        } catch(InterruptedException e) {
+                                e.printStackTrace();
+                        }
+
 
 
                 }

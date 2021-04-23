@@ -56,6 +56,8 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        btn.setEnabled(false);
+        btn.setText("laoding...");
         RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()).getBaseContext());
         final Double latit = 22.31554554826026;
         final Double longit = 114.22506642557767;
@@ -69,21 +71,26 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
                 url,
                 null,
                 object -> {
-                    ArrayList<String> names = new ArrayList<>();
+                    String names = "";
                     try {
                         final JSONArray results = object.getJSONArray("results");
                         for (int i = 0; i < object.length(); i++) {
                             final String name = results.getJSONObject(i).getString("name");
-                            names.add(name);
+                            names += '\n' + String.valueOf(i+1) + ". " + name;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    place.setText(names.toString());
-
+                    place.setText(names);
+                    btn.setEnabled(true);
+                    btn.setText("recommend");
                 },
-                error -> place.setText("Please retry")
+                error -> {
+                    place.setText("Please retry");
+                    btn.setEnabled(true);
+                    btn.setText("recommend");
+                }
         );
 
         queue.add(request);

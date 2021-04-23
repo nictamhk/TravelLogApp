@@ -20,6 +20,10 @@ public class ConfirmationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirmation);
 
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
+
         Intent intent = this.getIntent();
         POI checked_in_place = intent.getParcelableExtra("checked_in_place");
 

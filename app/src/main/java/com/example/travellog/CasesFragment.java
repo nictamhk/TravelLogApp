@@ -1,6 +1,7 @@
 package com.example.travellog;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import android.app.Activity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
     TextView caseInfo;
     String a = "";
     String message;
+    String sss[] = new String[40];
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        caseInfo.setText("loading...");
+        btn.setEnabled(false);
 
         String lon = "114.22506642557767";
         String lat = "22.31554554826026";
@@ -100,7 +104,6 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                     //获取类型名称的方法System.out.println(result.get("addressComponent").getClass().getName().toString());
                     //获取hkdata
                     String url = MessageFormat.format("https://api.data.gov.hk/v2/filter?q=%7B%22resource%22%3A%22http%3A%2F%2Fwww.chp.gov.hk%2Ffiles%2Fmisc%2Fbuilding_list_eng.csv%22%2C%22section%22%3A1%2C%22format%22%3A%22json%22%2C%22filters%22%3A%5B%5B1%2C%22eq%22%2C%5B%22{0}%22%5D%5D%5D%7D", a);
-                    System.out.println(url);
                     OkHttpClient confirms = new OkHttpClient();
                     Request conRe = new Request.Builder().url(url).get().build();
                     Call ca2 = confirms.newCall(conRe);
@@ -108,12 +111,22 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
                     Response response2 = ca2.execute();
                     assert response2.body() != null;
                     String rebody2 = response2.body().string();
-                    System.out.println("hello " + rebody2);
+
+                    JSONArray jsonArray  = JSONArray.parseArray(rebody2);
+                    JSONObject jsonObject1 = null;
+
                     if(rebody2.equals("[]")){
-                        message = "you are in "+ district +", it is safe here, just have fun.";
+                        message = "You are in "+ district +", it is safe here, just have fun.";
                     } else {
-                        message = "you are in "+ district +", there are some confirmed cases, please take care.";
+                        message = "You are in "+ district +",  please take care. \n There are some confirmed cases:";
                     }
+
+                    int _len = Math.min(jsonArray.size(), 5);
+                    for(int i=0; i<_len;i++) {
+                        jsonObject1 = jsonArray.getJSONObject(i);
+                        message += '\n' + String.valueOf(i+1) + ". " + jsonObject1.get("Building name").toString();
+                    }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -128,5 +141,7 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
         }
 
         caseInfo.setText(message);
+        btn.setEnabled(true);
+        btn.setText("Confirm Cases Nearby?");
     }
 }
