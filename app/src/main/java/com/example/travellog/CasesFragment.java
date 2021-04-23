@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,8 +51,11 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        caseInfo.setText("loading...");
-        btn.setEnabled(false);
+        ProgressDialog progress = new ProgressDialog(getActivity());
+        progress.setTitle("Loading ...");
+        progress.setMessage("Wait");
+        progress.setCancelable(false);
+        progress.show();
 
         String lon = "114.22506642557767";
         String lat = "22.31554554826026";
@@ -141,7 +145,6 @@ public class CasesFragment extends Fragment implements View.OnClickListener {
         }
 
         caseInfo.setText(message);
-        btn.setEnabled(true);
-        btn.setText("Confirm Cases Nearby?");
+        progress.dismiss();
     }
 }

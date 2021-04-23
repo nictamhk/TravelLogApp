@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
@@ -57,26 +58,31 @@ public class StatsFragment extends Fragment {
         pieChart = view.findViewById(R.id.idPieChart);
 
         pieChart.setRotationEnabled(true);
-        //pieChart.setUsePercentValues(true);
+        pieChart.setUsePercentValues(true);
+        pieChart.getDescription().setText("");
         //pieChart.setHoleColor(Color.BLUE);
         //pieChart.setCenterTextColor(Color.BLACK);
-        pieChart.setHoleRadius(25f);
+        pieChart.setHoleRadius(50f);
         pieChart.setTransparentCircleAlpha(0);
-        pieChart.setCenterText("Stay Time Pie Chart");
-        pieChart.setCenterTextSize(10);
+        pieChart.setCenterText("Where did I stay?");
+        pieChart.setCenterTextSize(13);
+        pieChart.setEntryLabelColor(Color.rgb(105,48,195));
         //pieChart.setDrawEntryLabels(true);
         //pieChart.setEntryLabelTextSize(20);
         //More options just check out the documentation!
 
         addDataSet();
 
-//        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-//            @Override
-//            public void onValueSelected(Entry e, Highlight h) {
-//                Log.d(TAG, "onValueSelected: Value select from chart.");
-//                Log.d(TAG, "onValueSelected: " + e.toString());
-//                Log.d(TAG, "onValueSelected: " + h.toString());
-//
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                Log.d(TAG, "onValueSelected: Value select from chart.");
+                Log.d(TAG, "onValueSelected: " + e.toString());
+                Log.d(TAG, "onValueSelected: " + h.toString());
+
+                final int x = (int) e.getX();
+                String staytype = xData[x];
+
 //                int pos1 = e.toString().indexOf("(sum): ");
 //                String sales = e.toString().substring(pos1 + 7);
 //
@@ -88,13 +94,13 @@ public class StatsFragment extends Fragment {
 //                    }
 //                }
 //                String staytype = xData[pos1 + 1];
-//            }
-//
-//            @Override
-//            public void onNothingSelected() {
-//
-//            }
-//        });
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
 
         return view;
     }
@@ -105,7 +111,7 @@ public class StatsFragment extends Fragment {
         ArrayList<String> xEntrys = new ArrayList<>();
 
         for(int i = 0; i < yData.length; i++){
-            yEntrys.add(new PieEntry(yData[i] , i));
+            yEntrys.add(new PieEntry(yData[i] , xData[i]));
         }
 
         for(int i = 1; i < xData.length; i++){
@@ -119,13 +125,13 @@ public class StatsFragment extends Fragment {
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
-        colors.add(Color.CYAN);
-        colors.add(Color.YELLOW);
-        colors.add(Color.MAGENTA);
+        colors.add(Color.rgb(255, 173, 173));
+        colors.add(Color.rgb(255, 214, 165));
+        colors.add(Color.rgb(253,255,182));
+        colors.add(Color.rgb(202,255,191));
+        colors.add(Color.rgb(155,246,255));
+        colors.add(Color.rgb(189,178,255));
+        colors.add(Color.rgb(255,198,255));
 
         pieDataSet.setColors(colors);
 
@@ -136,6 +142,7 @@ public class StatsFragment extends Fragment {
 
         //create pie data object
         PieData pieData = new PieData(pieDataSet);
+        pieData.setValueFormatter(new PercentFormatter(pieChart));
         pieChart.setData(pieData);
         pieChart.invalidate();
     }

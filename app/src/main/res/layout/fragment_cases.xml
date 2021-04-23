@@ -10,12 +10,11 @@
         android:id="@+id/caseInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="148dp"
+        android:layout_marginTop="104dp"
         android:gravity="center"
         android:lineHeight="25dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="cases information"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,10 +23,11 @@
         android:id="@+id/casesBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="comfirm cases nearby?"
+        android:text="Show me Covid cases nearby!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/caseInfo" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.841" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

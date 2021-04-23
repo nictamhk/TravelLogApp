@@ -1,5 +1,6 @@
 package com.example.travellog;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,8 +57,12 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        btn.setEnabled(false);
-        btn.setText("laoding...");
+        ProgressDialog progress = new ProgressDialog(getActivity());
+        progress.setTitle("Loading ...");
+        progress.setMessage("Wait");
+        progress.setCancelable(false);
+        progress.show();
+
         RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()).getBaseContext());
         final Double latit = 22.31554554826026;
         final Double longit = 114.22506642557767;
@@ -83,13 +88,11 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
                     }
 
                     place.setText(names);
-                    btn.setEnabled(true);
-                    btn.setText("recommend");
+                    progress.dismiss();
                 },
                 error -> {
                     place.setText("Please retry");
-                    btn.setEnabled(true);
-                    btn.setText("recommend");
+                    progress.dismiss();
                 }
         );
 
