@@ -20,7 +20,6 @@ import com.android.volley.RequestQueue;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -57,6 +56,16 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        GeoLocation location = new GeoLocation(getActivity().getBaseContext());
+        final double latit = location.getLatitude();
+        final double longit = location.getLongitude();
+
+        final String type = types_spinner.getSelectedItem().toString();
+        final String url = formatURL(latit, longit, type);
+        suggest(url);
+    }
+
+    private void suggest(String url) {
         ProgressDialog progress = new ProgressDialog(getActivity());
         progress.setTitle("Loading ...");
         progress.setMessage("Wait");
@@ -64,30 +73,23 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
         progress.show();
 
         RequestQueue queue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()).getBaseContext());
-        final Double latit = 22.31554554826026;
-        final Double longit = 114.22506642557767;
-        final String type = types_spinner.getSelectedItem().toString();
-        final String url = formatURL(latit, longit, type);
-        System.out.println(url);
-
-
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null,
                 object -> {
-                    String names = "";
+                    StringBuilder names = new StringBuilder();
                     try {
                         final JSONArray results = object.getJSONArray("results");
                         for (int i = 0; i < object.length(); i++) {
                             final String name = results.getJSONObject(i).getString("name");
-                            names += '\n' + String.valueOf(i+1) + ". " + name;
+                            names.append('\n').append((i + 1)).append(". ").append(name);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    place.setText(names);
+                    place.setText(names.toString());
                     progress.dismiss();
                 },
                 error -> {
@@ -103,3 +105,4 @@ public class SuggestFragment extends Fragment implements View.OnClickListener {
         return String.format(Locale.TRADITIONAL_CHINESE, "%s&key=%s&location=%f,%f&type=%s", baseUrl, PlaceAPIKey, lat, lon, type);
     }
 }
+
